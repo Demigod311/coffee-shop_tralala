@@ -1,0 +1,4 @@
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\HashGen\obj\Debug\net8.0\HashGen.GeneratedMSBuildEditorConfig.editorconfig
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\HashGen\obj\Debug\net8.0\HashGen.AssemblyInfoInputs.cache
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\HashGen\obj\Debug\net8.0\HashGen.AssemblyInfo.cs
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\HashGen\obj\Debug\net8.0\HashGen.csproj.CoreCompileInputs.cache

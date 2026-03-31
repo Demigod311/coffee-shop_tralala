@@ -1,0 +1,3 @@
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\obj\Debug\net8.0-windows\CoffeeShopPOS.csproj.AssemblyReference.cache
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\obj\Debug\net8.0-windows\CoffeeShopPOS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Fast material\coffe POS test\coffee-shop-pos\CoffeeShopPOS\obj\Debug\net8.0-windows\CoffeeShopPOS.csproj.CoreCompileInputs.cache

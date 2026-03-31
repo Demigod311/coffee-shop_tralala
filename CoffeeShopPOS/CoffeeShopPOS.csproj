@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- 
+    CoffeeShopPOS.csproj — Project configuration file
+    
+    This file defines the .NET 8 WinForms project, specifying:
+    - Target framework and output type (Windows Forms EXE)
+    - NuGet package dependencies (MySQL connector, BCrypt for password hashing)
+    - The project will NOT build on non-Windows platforms due to WinForms dependency
+  -->
+
+  <PropertyGroup>
+    <!-- Target .NET 8 on Windows for modern WinForms support -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <!-- Enable Windows Forms support — required for all Form classes in Forms/ folder -->
+    <UseWindowsForms>true</UseWindowsForms>
+    
+    <RootNamespace>CoffeeShopPOS</RootNamespace>
+    <AssemblyName>CoffeeShopPOS</AssemblyName>
+    <ApplicationIcon>Resources\coffee_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- MySql.Data — ADO.NET connector used by all DAL classes in Database/ folder -->
+    <PackageReference Include="MySql.Data" Version="8.4.0" />
+    
+    <!-- BCrypt.Net-Next — used by AuthService.cs for secure password hashing -->
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+</Project>
