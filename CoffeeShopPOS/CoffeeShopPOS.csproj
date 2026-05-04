@@ -21,12 +21,13 @@
     
     <RootNamespace>CoffeeShopPOS</RootNamespace>
     <AssemblyName>CoffeeShopPOS</AssemblyName>
-    <ApplicationIcon>Resources\coffee_icon.ico</ApplicationIcon>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- MySql.Data — ADO.NET connector used by all DAL classes in Database/ folder -->
-    <PackageReference Include="MySql.Data" Version="8.4.0" />
+    <!-- Npgsql — ADO.NET connector for PostgreSQL used by all DAL classes in Database/ folder -->
+    <PackageReference Include="Npgsql" Version="8.0.1" />
     
     <!-- BCrypt.Net-Next — used by AuthService.cs for secure password hashing -->
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />

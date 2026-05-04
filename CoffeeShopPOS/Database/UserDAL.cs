@@ -6,6 +6,7 @@
 //            LoginForm.cs (indirectly through AuthService)
 
 using CoffeeShopPOS.Models;
+using Npgsql;
 
 namespace CoffeeShopPOS.Database
 {
@@ -171,17 +172,17 @@ namespace CoffeeShopPOS.Database
         // ══════════════════════════════════════════════════════════════════════
         // PRIVATE HELPER — Maps a reader row to a User model
         // ══════════════════════════════════════════════════════════════════════
-        private static User MapUser(MySql.Data.MySqlClient.MySqlDataReader reader)
+        private static User MapUser(NpgsqlDataReader reader)
         {
             return new User
             {
-                UserId = reader.GetInt32("user_id"),
-                Username = reader.GetString("username"),
-                PasswordHash = reader.GetString("password_hash"),
-                FullName = reader.GetString("full_name"),
-                Role = reader.GetString("role"),
-                IsActive = reader.GetBoolean("is_active"),
-                CreatedAt = reader.GetDateTime("created_at")
+                UserId = DbHelper.GetInt32(reader, "user_id"),
+                Username = DbHelper.GetString(reader, "username"),
+                PasswordHash = DbHelper.GetString(reader, "password_hash"),
+                FullName = DbHelper.GetString(reader, "full_name"),
+                Role = DbHelper.GetString(reader, "role"),
+                IsActive = DbHelper.GetBoolean(reader, "is_active"),
+                CreatedAt = DbHelper.GetDateTime(reader, "created_at")
             };
         }
     }

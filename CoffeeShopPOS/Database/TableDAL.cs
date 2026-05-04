@@ -31,10 +31,10 @@ namespace CoffeeShopPOS.Database
                 {
                     tables.Add(new Table
                     {
-                        TableId = reader.GetInt32("table_id"),
-                        TableNumber = reader.GetString("table_number"),
-                        Capacity = reader.GetInt32("capacity"),
-                        Status = reader.GetString("status")
+                        TableId = DbHelper.GetInt32(reader, "table_id"),
+                        TableNumber = DbHelper.GetString(reader, "table_number"),
+                        Capacity = DbHelper.GetInt32(reader, "capacity"),
+                        Status = DbHelper.GetString(reader, "status")
                     });
                 }
             });
@@ -57,10 +57,10 @@ namespace CoffeeShopPOS.Database
                 {
                     tables.Add(new Table
                     {
-                        TableId = reader.GetInt32("table_id"),
-                        TableNumber = reader.GetString("table_number"),
-                        Capacity = reader.GetInt32("capacity"),
-                        Status = reader.GetString("status")
+                        TableId = DbHelper.GetInt32(reader, "table_id"),
+                        TableNumber = DbHelper.GetString(reader, "table_number"),
+                        Capacity = DbHelper.GetInt32(reader, "capacity"),
+                        Status = DbHelper.GetString(reader, "status")
                     });
                 }
             });

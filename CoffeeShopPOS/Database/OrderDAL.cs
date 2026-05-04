@@ -8,7 +8,7 @@
 //            DashboardForm.cs (today's order stats), ReportDAL.cs (sales aggregation)
 
 using CoffeeShopPOS.Models;
-using MySql.Data.MySqlClient;
+using Npgsql;
 
 namespace CoffeeShopPOS.Database
 {
@@ -186,15 +186,15 @@ namespace CoffeeShopPOS.Database
                 {
                     items.Add(new OrderItem
                     {
-                        OrderItemId = reader.GetInt32("order_item_id"),
-                        OrderId = reader.GetInt32("order_id"),
-                        ItemId = reader.GetInt32("item_id"),
-                        Quantity = reader.GetInt32("quantity"),
-                        UnitPrice = reader.GetDecimal("unit_price"),
+                        OrderItemId = DbHelper.GetInt32(reader, "order_item_id"),
+                        OrderId = DbHelper.GetInt32(reader, "order_id"),
+                        ItemId = DbHelper.GetInt32(reader, "item_id"),
+                        Quantity = DbHelper.GetInt32(reader, "quantity"),
+                        UnitPrice = DbHelper.GetDecimal(reader, "unit_price"),
                         Notes = reader.IsDBNull(reader.GetOrdinal("notes"))
-                            ? null : reader.GetString("notes"),
+                            ? null : DbHelper.GetString(reader, "notes"),
                         // item_name comes from the JOIN with menu_items
-                        ItemName = reader.GetString("item_name")
+                        ItemName = DbHelper.GetString(reader, "item_name")
                     });
                 }
             });
@@ -280,29 +280,25 @@ namespace CoffeeShopPOS.Database
         // PRIVATE HELPER — Maps a reader row to an Order model
         // Used by all Get* methods above to avoid code duplication
         // ══════════════════════════════════════════════════════════════════════
-        private static Order MapOrder(MySqlDataReader reader)
+        private static Order MapOrder(NpgsqlDataReader reader)
         {
             return new Order
             {
-                OrderId = reader.GetInt32("order_id"),
-                TableId = reader.IsDBNull(reader.GetOrdinal("table_id"))
-                    ? null : reader.GetInt32("table_id"),
-                UserId = reader.GetInt32("user_id"),
-                OrderType = reader.GetString("order_type"),
-                Status = reader.GetString("status"),
-                Subtotal = reader.GetDecimal("subtotal"),
-                Tax = reader.GetDecimal("tax"),
-                Discount = reader.GetDecimal("discount"),
-                Total = reader.GetDecimal("total"),
-                PaymentMethod = reader.GetString("payment_method"),
-                CreatedAt = reader.GetDateTime("created_at"),
-                CompletedAt = reader.IsDBNull(reader.GetOrdinal("completed_at"))
-                    ? null : reader.GetDateTime("completed_at"),
+                OrderId = DbHelper.GetInt32(reader, "order_id"),
+                TableId = DbHelper.GetNullableInt32(reader, "table_id"),
+                UserId = DbHelper.GetInt32(reader, "user_id"),
+                OrderType = DbHelper.GetString(reader, "order_type"),
+                Status = DbHelper.GetString(reader, "status"),
+                Subtotal = DbHelper.GetDecimal(reader, "subtotal"),
+                Tax = DbHelper.GetDecimal(reader, "tax"),
+                Discount = DbHelper.GetDecimal(reader, "discount"),
+                Total = DbHelper.GetDecimal(reader, "total"),
+                PaymentMethod = DbHelper.GetString(reader, "payment_method"),
+                CreatedAt = DbHelper.GetDateTime(reader, "created_at"),
+                CompletedAt = DbHelper.GetNullableDateTime(reader, "completed_at"),
                 // Navigation properties from JOINs
-                TableNumber = reader.IsDBNull(reader.GetOrdinal("table_number"))
-                    ? null : reader.GetString("table_number"),
-                StaffName = reader.IsDBNull(reader.GetOrdinal("staff_name"))
-                    ? null : reader.GetString("staff_name")
+                TableNumber = DbHelper.GetNullableString(reader, "table_number"),
+                StaffName = DbHelper.GetNullableString(reader, "staff_name")
             };
         }
     }

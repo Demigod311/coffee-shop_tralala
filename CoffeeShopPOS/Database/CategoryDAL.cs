@@ -38,12 +38,12 @@ namespace CoffeeShopPOS.Database
                 {
                     categories.Add(new Category
                     {
-                        CategoryId = reader.GetInt32("category_id"),
-                        Name = reader.GetString("name"),
+                        CategoryId = DbHelper.GetInt32(reader, "category_id"),
+                        Name = DbHelper.GetString(reader, "name"),
                         // Handle nullable description column
                         Description = reader.IsDBNull(reader.GetOrdinal("description"))
-                            ? null : reader.GetString("description"),
-                        IsActive = reader.GetBoolean("is_active")
+                            ? null : DbHelper.GetString(reader, "description"),
+                        IsActive = DbHelper.GetBoolean(reader, "is_active")
                     });
                 }
             });
@@ -67,11 +67,11 @@ namespace CoffeeShopPOS.Database
                 {
                     category = new Category
                     {
-                        CategoryId = reader.GetInt32("category_id"),
-                        Name = reader.GetString("name"),
+                        CategoryId = DbHelper.GetInt32(reader, "category_id"),
+                        Name = DbHelper.GetString(reader, "name"),
                         Description = reader.IsDBNull(reader.GetOrdinal("description"))
-                            ? null : reader.GetString("description"),
-                        IsActive = reader.GetBoolean("is_active")
+                            ? null : DbHelper.GetString(reader, "description"),
+                        IsActive = DbHelper.GetBoolean(reader, "is_active")
                     };
                 }
             });

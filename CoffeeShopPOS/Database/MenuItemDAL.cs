@@ -6,6 +6,7 @@
 //            OrderService.cs (price lookup when adding to orders)
 
 using CoffeeShopPOS.Models;
+using Npgsql;
 
 namespace CoffeeShopPOS.Database
 {
@@ -174,23 +175,20 @@ namespace CoffeeShopPOS.Database
         // PRIVATE HELPER — Maps a database reader row to a MenuItem model
         // Centralised mapping avoids code duplication across all Get* methods
         // ══════════════════════════════════════════════════════════════════════
-        private static MenuItem MapMenuItem(MySql.Data.MySqlClient.MySqlDataReader reader)
+        private static MenuItem MapMenuItem(NpgsqlDataReader reader)
         {
             return new MenuItem
             {
-                ItemId = reader.GetInt32("item_id"),
-                CategoryId = reader.GetInt32("category_id"),
-                Name = reader.GetString("name"),
-                Description = reader.IsDBNull(reader.GetOrdinal("description"))
-                    ? null : reader.GetString("description"),
-                Price = reader.GetDecimal("price"),
-                IsAvailable = reader.GetBoolean("is_available"),
-                ImagePath = reader.IsDBNull(reader.GetOrdinal("image_path"))
-                    ? null : reader.GetString("image_path"),
-                CreatedAt = reader.GetDateTime("created_at"),
+                ItemId = DbHelper.GetInt32(reader, "item_id"),
+                CategoryId = DbHelper.GetInt32(reader, "category_id"),
+                Name = DbHelper.GetString(reader, "name"),
+                Description = DbHelper.GetNullableString(reader, "description"),
+                Price = DbHelper.GetDecimal(reader, "price"),
+                IsAvailable = DbHelper.GetBoolean(reader, "is_available"),
+                ImagePath = DbHelper.GetNullableString(reader, "image_path"),
+                CreatedAt = DbHelper.GetDateTime(reader, "created_at"),
                 // category_name comes from the JOIN with categories table
-                CategoryName = reader.IsDBNull(reader.GetOrdinal("category_name"))
-                    ? null : reader.GetString("category_name")
+                CategoryName = DbHelper.GetNullableString(reader, "category_name")
             };
         }
     }

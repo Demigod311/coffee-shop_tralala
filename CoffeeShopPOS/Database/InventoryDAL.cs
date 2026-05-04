@@ -6,6 +6,7 @@
 //            InventoryReportForm.cs (low stock alerts), DashboardForm.cs (stock warnings)
 
 using CoffeeShopPOS.Models;
+using Npgsql;
 
 namespace CoffeeShopPOS.Database
 {
@@ -207,18 +208,17 @@ namespace CoffeeShopPOS.Database
         // ══════════════════════════════════════════════════════════════════════
         // PRIVATE HELPER — Maps a reader row to an InventoryItem model
         // ══════════════════════════════════════════════════════════════════════
-        private static InventoryItem MapInventoryItem(MySql.Data.MySqlClient.MySqlDataReader reader)
+        private static InventoryItem MapInventoryItem(NpgsqlDataReader reader)
         {
             return new InventoryItem
             {
-                InventoryId = reader.GetInt32("inventory_id"),
-                Name = reader.GetString("name"),
-                Unit = reader.GetString("unit"),
-                Quantity = reader.GetDecimal("quantity"),
-                ReorderLevel = reader.GetDecimal("reorder_level"),
-                CostPerUnit = reader.IsDBNull(reader.GetOrdinal("cost_per_unit"))
-                    ? null : reader.GetDecimal("cost_per_unit"),
-                LastUpdated = reader.GetDateTime("last_updated")
+                InventoryId = DbHelper.GetInt32(reader, "inventory_id"),
+                Name = DbHelper.GetString(reader, "name"),
+                Unit = DbHelper.GetString(reader, "unit"),
+                Quantity = DbHelper.GetDecimal(reader, "quantity"),
+                ReorderLevel = DbHelper.GetDecimal(reader, "reorder_level"),
+                CostPerUnit = DbHelper.GetNullableDecimal(reader, "cost_per_unit"),
+                LastUpdated = DbHelper.GetDateTime(reader, "last_updated")
             };
         }
     }
