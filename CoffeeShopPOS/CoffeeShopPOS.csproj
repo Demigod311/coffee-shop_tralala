@@ -5,7 +5,7 @@
     
     This file defines the .NET 8 WinForms project, specifying:
     - Target framework and output type (Windows Forms EXE)
-    - NuGet package dependencies (MySQL connector, BCrypt for password hashing)
+    - NuGet package dependencies (Npgsql for PostgreSQL, BCrypt for password hashing)
     - The project will NOT build on non-Windows platforms due to WinForms dependency
   -->
 
@@ -16,7 +16,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     
-    <!-- Enable Windows Forms support — required for all Form classes in Forms/ folder -->
+    <!-- Enable Windows Forms support — required for all Form classes in frontend/Forms/ -->
     <UseWindowsForms>true</UseWindowsForms>
     
     <RootNamespace>CoffeeShopPOS</RootNamespace>
@@ -26,9 +26,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Npgsql — ADO.NET connector for PostgreSQL used by all DAL classes in Database/ folder -->
+    <!-- Npgsql — ADO.NET connector for PostgreSQL used by all DAL classes in backend/Database/ -->
     <PackageReference Include="Npgsql" Version="8.0.1" />
-    
+
     <!-- BCrypt.Net-Next — used by AuthService.cs for secure password hashing -->
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>

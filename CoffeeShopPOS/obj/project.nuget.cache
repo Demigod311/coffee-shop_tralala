@@ -1,26 +1,26 @@
 {
   "version": 2,
-  "dgSpecHash": "C1dDTdQmBf0=",
+  "dgSpecHash": "L2PH8Kd/yOo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+  "projectFilePath": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.26\\microsoft.netcore.app.ref.8.0.26.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.26\\microsoft.windowsdesktop.app.ref.8.0.26.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.26\\microsoft.aspnetcore.app.ref.8.0.26.nupkg.sha512",
-    "C:\\Users\\Hi-Tech\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.26\\microsoft.netcore.app.host.win-x64.8.0.26.nupkg.sha512"
+    "C:\\Users\\HP\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.26\\microsoft.netcore.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.26\\microsoft.windowsdesktop.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.26\\microsoft.aspnetcore.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.26\\microsoft.netcore.app.host.win-x64.8.0.26.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'Npgsql' 8.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-x9vc-6hfv-hg8c",
-      "projectPath": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+      "projectPath": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+      "filePath": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
       "libraryId": "Npgsql",
       "targetGraphs": [
         "net8.0-windows7.0"

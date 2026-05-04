@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj": {}
+    "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj": {
+    "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+        "projectUniqueName": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
         "projectName": "CoffeeShopPOS",
-        "projectPath": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
-        "packagesPath": "C:\\Users\\Hi-Tech\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hi-Tech\\Desktop\\new folder shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\obj\\",
+        "projectPath": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "D:\\shaheer\\coffee-shop_tralala\\CoffeeShopPOS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hi-Tech\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
@@ -90,7 +90,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
