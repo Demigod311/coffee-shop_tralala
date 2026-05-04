@@ -21,9 +21,16 @@
     
     <RootNamespace>CoffeeShopPOS</RootNamespace>
     <AssemblyName>CoffeeShopPOS</AssemblyName>
+    <StartupObject>CoffeeShopPOS.Program</StartupObject>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="backend\HashGen\**" />
+    <EmbeddedResource Remove="backend\HashGen\**" />
+    <None Remove="backend\HashGen\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- Npgsql — ADO.NET connector for PostgreSQL used by all DAL classes in backend/Database/ -->

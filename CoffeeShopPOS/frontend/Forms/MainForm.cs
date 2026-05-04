@@ -425,7 +425,11 @@ namespace CoffeeShopPOS.Forms
 
             var firstNav = navContainer.Controls.OfType<Panel>().FirstOrDefault();
             if (firstNav != null)
-                firstNav.PerformClick();
+            {
+                // Panels don't have PerformClick(); use reflection to trigger the Click event
+                var method = typeof(Control).GetMethod("OnClick", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                method?.Invoke(firstNav, new object[] { EventArgs.Empty });
+            }
 
             if (AuthService.HasAccess("Inventory"))
             {

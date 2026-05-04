@@ -153,11 +153,11 @@ namespace CoffeeShopPOS.Services
         {
             try
             {
-                var users = UserDAL.GetAll(includeInactive: true);
-                if (users.Count == 0)
+                var admin = UserDAL.GetByUsername("admin");
+                if (admin == null)
                 {
-                    // Create a default admin account
-                    var admin = new User
+                    // Create a default admin account if none exists
+                    admin = new User
                     {
                         Username = "admin",
                         PasswordHash = HashPassword("admin123"),
@@ -166,6 +166,12 @@ namespace CoffeeShopPOS.Services
                         IsActive = true
                     };
                     UserDAL.Insert(admin);
+                }
+                else if (admin.PasswordHash == "$2a$11$K5Hn8VjKJcMEJq3Rz1X8..ZMd5fY7Sp8e3vKHGQb5p9LjV3Wq0PNm")
+                {
+                    // If the admin exists but has the placeholder hash from seed_data.sql,
+                    // update it to a valid hash for 'admin123'
+                    UserDAL.UpdatePassword(admin.UserId, HashPassword("admin123"));
                 }
             }
             catch
