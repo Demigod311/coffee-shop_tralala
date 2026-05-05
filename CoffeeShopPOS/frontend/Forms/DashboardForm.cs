@@ -255,12 +255,13 @@ namespace CoffeeShopPOS.Forms
                 int rank = 1;
                 foreach (var row in items.Rows.Cast<System.Data.DataRow>())
                 {
+                    var revenueText = row["Revenue"]?.ToString()?.Replace(",", "") ?? "0";
                     var dataRow = BuildTopItemRow(
                         rank++,
-                        row["item_name"]?.ToString() ?? "",
-                        row["category_name"]?.ToString() ?? "",
-                        row["total_qty"]?.ToString() ?? "0",
-                        Convert.ToDecimal(row["total_revenue"] ?? 0));
+                        row["Item"]?.ToString() ?? "",
+                        row["Category"]?.ToString() ?? "",
+                        row["Qty Sold"]?.ToString() ?? "0",
+                        decimal.TryParse(revenueText, out var revenue) ? revenue : 0m);
                     topItemsCard.Controls.Add(dataRow);
                 }
 
