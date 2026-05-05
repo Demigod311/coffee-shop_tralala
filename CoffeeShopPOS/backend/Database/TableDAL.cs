@@ -76,7 +76,7 @@ namespace CoffeeShopPOS.Database
         /// </summary>
         public static bool UpdateStatus(int tableId, string status)
         {
-            string query = "UPDATE tables SET status = @status WHERE table_id = @id";
+            string query = "UPDATE tables SET status = @status::table_status_enum WHERE table_id = @id";
             var parameters = new Dictionary<string, object?>
             {
                 { "@id", tableId },
@@ -93,7 +93,7 @@ namespace CoffeeShopPOS.Database
         public static int Insert(Table table)
         {
             string query = @"INSERT INTO tables (table_number, capacity, status)
-                            VALUES (@num, @cap, @status)
+                            VALUES (@num, @cap, @status::table_status_enum)
                             RETURNING table_id;";
 
             var parameters = new Dictionary<string, object?>
@@ -114,7 +114,7 @@ namespace CoffeeShopPOS.Database
         public static bool Update(Table table)
         {
             string query = @"UPDATE tables 
-                            SET table_number = @num, capacity = @cap, status = @status 
+                            SET table_number = @num, capacity = @cap, status = @status::table_status_enum 
                             WHERE table_id = @id";
 
             var parameters = new Dictionary<string, object?>

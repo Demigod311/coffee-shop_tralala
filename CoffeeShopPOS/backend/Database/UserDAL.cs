@@ -83,7 +83,7 @@ namespace CoffeeShopPOS.Database
         public static int Insert(User user)
         {
             string query = @"INSERT INTO users (username, password_hash, full_name, role, is_active)
-                            VALUES (@username, @hash, @name, @role, @active)
+                            VALUES (@username, @hash, @name, @role::user_role_enum, @active)
                             RETURNING user_id;";
 
             var parameters = new Dictionary<string, object?>
@@ -106,7 +106,7 @@ namespace CoffeeShopPOS.Database
         public static bool Update(User user)
         {
             string query = @"UPDATE users 
-                            SET username = @username, full_name = @name, role = @role, is_active = @active 
+                            SET username = @username, full_name = @name, role = @role::user_role_enum, is_active = @active 
                             WHERE user_id = @id";
 
             var parameters = new Dictionary<string, object?>
