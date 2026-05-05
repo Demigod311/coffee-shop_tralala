@@ -34,9 +34,8 @@ namespace CoffeeShopPOS.Forms
             var header = new Panel
             {
                 Dock      = DockStyle.Top,
-                Height    = 62,
+                Height    = 110,
                 BackColor = Color.White,
-                Padding   = new Padding(0, 0, 0, 0),
             };
             header.Paint += (s, e) =>
             {
@@ -44,62 +43,90 @@ namespace CoffeeShopPOS.Forms
                 e.Graphics.DrawLine(pen, 0, header.Height - 1, header.Width, header.Height - 1);
             };
 
-            // Legend dots
-            var legendPanel = new FlowLayoutPanel
+            // ── Legend row (bottom of header) ──
+            var legendRow = new FlowLayoutPanel
             {
-                Dock          = DockStyle.Fill,
+                Dock          = DockStyle.Bottom,
+                Height        = 44,
                 FlowDirection = FlowDirection.LeftToRight,
                 BackColor     = Color.Transparent,
-                Padding       = new Padding(16, 0, 0, 0),
+                Padding       = new Padding(20, 0, 0, 0),
                 WrapContents  = false,
             };
+            legendRow.Controls.Add(new Label
+            {
+                Text      = "Status:",
+                Font      = new Font("Segoe UI", 10),
+                ForeColor = UIHelper.TextMuted,
+                AutoSize  = false,
+                Size      = new Size(55, 44),
+                TextAlign = ContentAlignment.MiddleLeft,
+                BackColor = Color.Transparent,
+                Margin    = new Padding(0, 0, 8, 0),
+            });
             foreach (var (status, clr) in new[] {
                 ("Available", UIHelper.Green),
                 ("Occupied",  UIHelper.Red),
                 ("Reserved",  UIHelper.Orange),
             })
             {
-                var dot = new Label
+                legendRow.Controls.Add(new Label
                 {
                     Text      = "●",
                     Font      = new Font("Segoe UI", 10),
                     ForeColor = clr,
                     AutoSize  = false,
-                    Size      = new Size(18, 62),
+                    Size      = new Size(18, 44),
                     TextAlign = ContentAlignment.MiddleCenter,
                     BackColor = Color.Transparent,
                     Margin    = new Padding(0, 0, 2, 0),
-                };
-                var lbl = new Label
+                });
+                legendRow.Controls.Add(new Label
                 {
                     Text      = status,
                     Font      = new Font("Segoe UI", 10),
                     ForeColor = UIHelper.TextMuted,
                     AutoSize  = false,
-                    Size      = new Size(80, 62),
+                    Size      = new Size(80, 44),
                     TextAlign = ContentAlignment.MiddleLeft,
                     BackColor = Color.Transparent,
                     Margin    = new Padding(0, 0, 16, 0),
-                };
-                legendPanel.Controls.Add(dot);
-                legendPanel.Controls.Add(lbl);
+                });
             }
-            header.Controls.Add(legendPanel);
+            header.Controls.Add(legendRow);
 
-            // Add Table button (right side)
+            // ── Title row (fills remaining top area) ──
+            var titleRow = new Panel
+            {
+                Dock      = DockStyle.Fill,
+                BackColor = Color.Transparent,
+                Padding   = new Padding(20, 0, 0, 0),
+            };
+            titleRow.Controls.Add(new Label
+            {
+                Text      = "Table Management",
+                Font      = new Font("Segoe UI", 14, FontStyle.Bold),
+                ForeColor = UIHelper.TextDark,
+                Dock      = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft,
+                BackColor = Color.Transparent,
+            });
+
+            // "+ Add Table" button on the right of the title row
             var btnAdd = UIHelper.MakeButton("+ Add Table", UIHelper.Gold, Color.White, 130, 40);
-            btnAdd.Location = new Point(0, 0); // will be positioned on resize
             var btnContainer = new Panel
             {
                 Dock      = DockStyle.Right,
                 Width     = 158,
                 BackColor = Color.Transparent,
-                Padding   = new Padding(0, 11, 16, 11),
+                Padding   = new Padding(0, 10, 16, 10),
             };
             btnAdd.Dock = DockStyle.Fill;
             btnContainer.Controls.Add(btnAdd);
             btnAdd.Click += (s, e) => ShowTableDialog(null);
-            header.Controls.Add(btnContainer);
+            titleRow.Controls.Add(btnContainer);
+
+            header.Controls.Add(titleRow);
 
             this.Controls.Add(header);
         }
@@ -270,8 +297,8 @@ namespace CoffeeShopPOS.Forms
                 var g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 var rect = new Rectangle(0, 0, card.Width - 1, card.Height - 1);
-                using var path   = UIHelper.RoundedPath(rect, 10);
-                using var bgBrush = new SolidBrush(Color.White);
+                using var path    = UIHelper.RoundedPath(rect, 10);
+                using var bgBrush = new SolidBrush(statusLight);
                 g.FillPath(bgBrush, path);
                 using var borderPen = new Pen(statusClr, 1.5f);
                 g.DrawPath(borderPen, path);
@@ -288,12 +315,12 @@ namespace CoffeeShopPOS.Forms
             {
                 var g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                using var brush = new SolidBrush(statusLight);
+                using var brush = new SolidBrush(statusClr);
                 g.FillEllipse(brush, 0, 0, 51, 51);
                 using var font = new Font("Segoe UI", 15, FontStyle.Bold);
                 var num = table.TableNumber.Replace("T", "").Replace("Table ", "");
                 TextRenderer.DrawText(g, num, font, circle.ClientRectangle,
-                    statusClr, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+                    Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             };
             card.Controls.Add(circle);
 

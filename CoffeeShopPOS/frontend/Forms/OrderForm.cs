@@ -206,7 +206,7 @@ namespace CoffeeShopPOS.Forms
             var bottomBar = new Panel
             {
                 Dock      = DockStyle.Bottom,
-                Height    = 186,
+                Height    = 222,
                 BackColor = Color.Transparent,
             };
             BuildCartBottom(bottomBar);
@@ -277,6 +277,33 @@ namespace CoffeeShopPOS.Forms
                 BackColor = Color.Transparent,
             };
             bar.Controls.Add(lblTotal);
+
+            // Discount input field (between Tax and Total)
+            var discountPanel = new Panel
+            {
+                Dock      = DockStyle.Bottom,
+                Height    = 36,
+                BackColor = Color.FromArgb(242, 237, 228),
+            };
+            discountPanel.Resize += (s, e) =>
+            {
+                if (discountPanel.Width > 0)
+                    discountPanel.Region = new Region(UIHelper.RoundedPath(
+                        new Rectangle(0, 0, discountPanel.Width, discountPanel.Height), 8));
+            };
+            txtDiscount = new TextBox
+            {
+                Font        = new Font("Segoe UI", 11),
+                BorderStyle = BorderStyle.None,
+                BackColor   = Color.FromArgb(242, 237, 228),
+                ForeColor   = UIHelper.TextDark,
+                Text        = "0",
+                TextAlign   = HorizontalAlignment.Center,
+                Dock        = DockStyle.Fill,
+            };
+            txtDiscount.TextChanged += (s, e) => UpdateTotals();
+            discountPanel.Controls.Add(txtDiscount);
+            bar.Controls.Add(discountPanel);
 
             lblTax = new Label
             {
@@ -662,7 +689,8 @@ namespace CoffeeShopPOS.Forms
         {
             decimal subtotal = cartItems.Sum(i => i.LineTotal);
             decimal tax      = Math.Round(subtotal * OrderService.TaxRate, 2);
-            decimal total    = subtotal + tax;
+            decimal discount = decimal.TryParse(txtDiscount?.Text, out decimal d) && d >= 0 ? d : 0;
+            decimal total    = Math.Max(0, subtotal + tax - discount);
 
             lblSubtotal.Text = $"Subtotal    ${subtotal:F2}";
             lblTax.Text      = $"Tax (10%)   ${tax:F2}";

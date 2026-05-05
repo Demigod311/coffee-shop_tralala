@@ -115,10 +115,10 @@ namespace CoffeeShopPOS.Forms
             int w   = (kpiRow.Width - gap * 3) / 4;
             int h   = kpiRow.Height - 8;
 
-            CreateKpiCard("Today's Orders", _orders.ToString(),    "🛒", UIHelper.Blue,   gap,                 w, h);
-            CreateKpiCard("Revenue",        $"${_revenue:N2}",     "💰", UIHelper.Green,  gap + (w + gap),     w, h);
-            CreateKpiCard("Avg Order Value",$"${_avg:N2}",         "📊", UIHelper.Gold,   gap + (w + gap) * 2, w, h);
-            CreateKpiCard("Low Stock Alerts",_low.ToString(),       "⚠", _low > 0 ? UIHelper.Red : UIHelper.Green,
+            CreateKpiCard("Today's Orders",  _orders.ToString(),   "🛒", UIHelper.Blue,   gap,                 w, h);
+            CreateKpiCard("Revenue",         $"${_revenue:N2}",    "$",  UIHelper.Green,  gap + (w + gap),     w, h);
+            CreateKpiCard("Avg Order Value", $"${_avg:N2}",        "↗",  UIHelper.Gold,   gap + (w + gap) * 2, w, h);
+            CreateKpiCard("Low Stock Alerts", _low.ToString(),     "⚠",  _low > 0 ? UIHelper.Red : UIHelper.Green,
                                                                           gap + (w + gap) * 3, w, h);
         }
 
@@ -159,10 +159,10 @@ namespace CoffeeShopPOS.Forms
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 using var brush = new SolidBrush(Color.FromArgb(30, accent.R, accent.G, accent.B));
                 g.FillEllipse(brush, 0, 0, 47, 47);
-                using var accBrush = new SolidBrush(accent);
-                // Draw a smaller accent circle overlay
                 g.FillEllipse(new SolidBrush(Color.FromArgb(50, accent.R, accent.G, accent.B)), 4, 4, 39, 39);
-                TextRenderer.DrawText(e.Graphics, icon, new Font("Segoe UI", 18),
+                bool isEmoji  = icon == "🛒" || icon == "⚠";
+                var iconFont  = isEmoji ? new Font("Segoe UI Emoji", 16) : new Font("Segoe UI", 20, FontStyle.Bold);
+                TextRenderer.DrawText(e.Graphics, icon, iconFont,
                     iconCircle.ClientRectangle, accent,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             };
