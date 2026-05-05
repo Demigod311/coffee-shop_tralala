@@ -45,25 +45,9 @@ namespace CoffeeShopPOS.Services
             // Step 1: Calculate totals
             CalculateTotals(order);
 
-            // Step 2: Create the order record in the database
-            // OrderDAL.Create() inserts into the 'orders' table and returns the new order_id
-            int orderId = OrderDAL.Create(order);
+            // Step 2-4: Persist order, items and table occupancy atomically.
+            int orderId = OrderDAL.CreateWithItems(order);
             order.OrderId = orderId;
-
-            // Step 3: Add each line item to the order
-            foreach (var item in order.Items)
-            {
-                item.OrderId = orderId;  // Link item to the newly created order
-                OrderDAL.AddItem(item);   // Insert into 'order_items' table
-            }
-
-            // Step 4: If this is a dine-in order, mark the table as Occupied
-            // This connects to TableDAL.cs which updates the 'tables' table
-            if (order.TableId.HasValue && order.OrderType == "Dine-In")
-            {
-                TableDAL.UpdateStatus(order.TableId.Value, "Occupied");
-            }
-
             return orderId;
         }
 

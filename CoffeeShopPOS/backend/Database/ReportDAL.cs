@@ -28,7 +28,7 @@ namespace CoffeeShopPOS.Database
                                 SUM(discount) AS discount_total,
                                 SUM(total) AS revenue
                             FROM orders
-                            WHERE status = 'Completed'
+                            WHERE status <> 'Cancelled'
                               AND created_at BETWEEN @start AND @end
                             GROUP BY created_at::date
                             ORDER BY sale_date DESC";
@@ -54,7 +54,7 @@ namespace CoffeeShopPOS.Database
                                 COUNT(*) AS total_orders,
                                 SUM(total) AS revenue
                             FROM orders
-                            WHERE status = 'Completed' AND EXTRACT(YEAR FROM created_at)::int = @year
+                            WHERE status <> 'Cancelled' AND EXTRACT(YEAR FROM created_at)::int = @year
                             GROUP BY EXTRACT(MONTH FROM created_at)::int, TO_CHAR(created_at, 'Month')
                             ORDER BY month_num";
 
@@ -89,7 +89,7 @@ namespace CoffeeShopPOS.Database
                             JOIN menu_items m ON oi.item_id = m.item_id
                             JOIN categories c ON m.category_id = c.category_id
                             JOIN orders o ON oi.order_id = o.order_id
-                            WHERE o.status = 'Completed' {dateFilter}
+                            WHERE o.status <> 'Cancelled' {dateFilter}
                             GROUP BY m.item_id, m.name, c.name
                             ORDER BY total_qty DESC
                             LIMIT @limit";
@@ -112,7 +112,7 @@ namespace CoffeeShopPOS.Database
                                 COALESCE(SUM(CASE WHEN payment_method = 'Card' THEN total ELSE 0 END), 0) AS card_revenue,
                                 COALESCE(SUM(CASE WHEN payment_method = 'Online' THEN total ELSE 0 END), 0) AS online_revenue
                             FROM orders 
-                            WHERE status = 'Completed' AND created_at::date = CURRENT_DATE";
+                            WHERE status <> 'Cancelled' AND created_at::date = CURRENT_DATE";
 
             var results = DbHelper.ExecuteQuery(query, null);
             return results.Count > 0 ? results[0] : new Dictionary<string, object?>();
@@ -153,7 +153,7 @@ namespace CoffeeShopPOS.Database
                                 COUNT(*) AS order_count,
                                 SUM(total) AS total_amount
                             FROM orders 
-                            WHERE status = 'Completed' 
+                            WHERE status <> 'Cancelled' 
                               AND created_at BETWEEN @start AND @end
                             GROUP BY payment_method
                             ORDER BY total_amount DESC";
@@ -182,7 +182,7 @@ namespace CoffeeShopPOS.Database
                             JOIN menu_items m ON oi.item_id = m.item_id
                             JOIN categories c ON m.category_id = c.category_id
                             JOIN orders o ON oi.order_id = o.order_id
-                            WHERE o.status = 'Completed' 
+                            WHERE o.status <> 'Cancelled' 
                               AND o.created_at BETWEEN @start AND @end
                             GROUP BY c.category_id, c.name
                             ORDER BY revenue DESC";
@@ -207,7 +207,7 @@ namespace CoffeeShopPOS.Database
                                 COUNT(*) AS order_count,
                                 SUM(total) AS revenue
                             FROM orders
-                            WHERE status = 'Completed' AND created_at::date = CURRENT_DATE
+                            WHERE status <> 'Cancelled' AND created_at::date = CURRENT_DATE
                             GROUP BY EXTRACT(HOUR FROM created_at)::int
                             ORDER BY hour";
 

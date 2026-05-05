@@ -19,6 +19,68 @@ namespace CoffeeShopPOS.Database
     public static class OrderDAL
     {
         /// <summary>
+        /// Creates an order and its items atomically in a single transaction.
+        /// Also updates table status for dine-in orders.
+        /// </summary>
+        public static int CreateWithItems(Order order)
+        {
+            using var connection = DbHelper.GetConnection();
+            using var tx = connection.BeginTransaction();
+
+            try
+            {
+                const string createOrderQuery = @"INSERT INTO orders (table_id, user_id, order_type, status,
+                                                subtotal, tax, discount, total, payment_method)
+                                                VALUES (@tableId, @userId, @type, @status,
+                                                @subtotal, @tax, @discount, @total, @payment)
+                                                RETURNING order_id;";
+
+                using var createOrderCmd = new NpgsqlCommand(createOrderQuery, connection, tx);
+                createOrderCmd.Parameters.AddWithValue("@tableId", order.TableId.HasValue ? order.TableId.Value : DBNull.Value);
+                createOrderCmd.Parameters.AddWithValue("@userId", order.UserId);
+                createOrderCmd.Parameters.AddWithValue("@type", order.OrderType);
+                createOrderCmd.Parameters.AddWithValue("@status", order.Status);
+                createOrderCmd.Parameters.AddWithValue("@subtotal", order.Subtotal);
+                createOrderCmd.Parameters.AddWithValue("@tax", order.Tax);
+                createOrderCmd.Parameters.AddWithValue("@discount", order.Discount);
+                createOrderCmd.Parameters.AddWithValue("@total", order.Total);
+                createOrderCmd.Parameters.AddWithValue("@payment", order.PaymentMethod);
+
+                int orderId = Convert.ToInt32(createOrderCmd.ExecuteScalar());
+
+                const string addItemQuery = @"INSERT INTO order_items (order_id, item_id, quantity, unit_price, notes)
+                                              VALUES (@orderId, @itemId, @qty, @price, @notes)";
+
+                foreach (var item in order.Items)
+                {
+                    using var addItemCmd = new NpgsqlCommand(addItemQuery, connection, tx);
+                    addItemCmd.Parameters.AddWithValue("@orderId", orderId);
+                    addItemCmd.Parameters.AddWithValue("@itemId", item.ItemId);
+                    addItemCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                    addItemCmd.Parameters.AddWithValue("@price", item.UnitPrice);
+                    addItemCmd.Parameters.AddWithValue("@notes", (object?)item.Notes ?? DBNull.Value);
+                    addItemCmd.ExecuteNonQuery();
+                }
+
+                if (order.TableId.HasValue && order.OrderType == "Dine-In")
+                {
+                    const string lockTableQuery = "UPDATE tables SET status = 'Occupied' WHERE table_id = @id";
+                    using var lockTableCmd = new NpgsqlCommand(lockTableQuery, connection, tx);
+                    lockTableCmd.Parameters.AddWithValue("@id", order.TableId.Value);
+                    lockTableCmd.ExecuteNonQuery();
+                }
+
+                tx.Commit();
+                return orderId;
+            }
+            catch
+            {
+                tx.Rollback();
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates a new order and returns the auto-generated order_id.
         /// Called by: OrderService.PlaceOrder() which is triggered from OrderForm.cs.
         /// This inserts into the 'orders' table — line items are added separately via AddItem().
