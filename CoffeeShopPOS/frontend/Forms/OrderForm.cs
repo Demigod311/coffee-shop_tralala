@@ -361,7 +361,7 @@ namespace CoffeeShopPOS.Forms
         private void LoadTables()
         {
             cmbTable.Items.Clear();
-            foreach (var t in TableDAL.GetAll())
+            foreach (var t in TableDAL.GetAvailable())
                 cmbTable.Items.Add(t);
             if (cmbTable.Items.Count > 0)
                 cmbTable.SelectedIndex = 0;
