@@ -35,9 +35,6 @@ namespace CoffeeShopPOS.Forms
 
             BuildSidebar();
             BuildMainArea();
-            // Ensure docked controls are laid out in deterministic order.
-            sidebarPanel.BringToFront();
-
             clockTimer = new System.Windows.Forms.Timer { Interval = 1000 };
             clockTimer.Tick += (s, e) => UpdateClock();
             clockTimer.Start();
@@ -305,6 +302,9 @@ namespace CoffeeShopPOS.Forms
                 BackColor = UIHelper.ContentBg,
             };
             this.Controls.Add(mainContainer);
+            // Ensure sidebar (Left) is docked before main container (Fill) to avoid overlap.
+            this.Controls.SetChildIndex(mainContainer, 0);
+            this.Controls.SetChildIndex(sidebarPanel, 1);
 
             // Header
             var headerPanel = new Panel
