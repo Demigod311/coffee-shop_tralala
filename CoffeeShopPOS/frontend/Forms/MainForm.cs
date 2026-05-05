@@ -84,12 +84,13 @@ namespace CoffeeShopPOS.Forms
             sidebarPanel.Controls.Add(logoPanel);
 
             // ── Top separator ──
-            sidebarPanel.Controls.Add(new Panel
+            var topSeparator = new Panel
             {
                 Dock      = DockStyle.Top,
                 Height    = 1,
                 BackColor = Color.FromArgb(52, 40, 28),
-            });
+            };
+            sidebarPanel.Controls.Add(topSeparator);
 
             // ── Bottom user + logout (added before Fill so it docks correctly) ──
             BuildSidebarBottom();
@@ -119,7 +120,7 @@ namespace CoffeeShopPOS.Forms
                 y += 48;
             }
 
-            AddNav("📊", "Dashboard",    AuthService.HasAccess("Dashboard"),         () => new DashboardForm(),          "Dashboard");
+            AddNav("📊", "Dashboard",    true,                                        () => new DashboardForm(),          "Dashboard");
             AddNav("🛒", "New Order",    true,                                        () => new OrderForm(),              "New Order");
             AddNav("🪑", "Tables",       true,                                        () => new TableManagementForm(),    "Tables");
             AddNav("📋", "Order History",true,                                        () => new OrderHistoryForm(),       "Order History");
@@ -149,6 +150,16 @@ namespace CoffeeShopPOS.Forms
                         navItem.Width = sidebarPanel.Width;
                 }
             };
+
+            // Enforce sidebar docking order to avoid nav rows being hidden.
+            var bottomPanel = sidebarPanel.Controls.OfType<Panel>().FirstOrDefault(p => p.Dock == DockStyle.Bottom);
+            if (bottomPanel != null)
+            {
+                sidebarPanel.Controls.SetChildIndex(navContainer, 0);
+                sidebarPanel.Controls.SetChildIndex(bottomPanel, 1);
+                sidebarPanel.Controls.SetChildIndex(topSeparator, 2);
+                sidebarPanel.Controls.SetChildIndex(logoPanel, 3);
+            }
         }
 
         private Panel MakeNavItem(string icon, string text)
