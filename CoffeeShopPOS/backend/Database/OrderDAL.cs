@@ -31,8 +31,8 @@ namespace CoffeeShopPOS.Database
             {
                 const string createOrderQuery = @"INSERT INTO orders (table_id, user_id, order_type, status,
                                                 subtotal, tax, discount, total, payment_method)
-                                                VALUES (@tableId, @userId, @type, @status,
-                                                @subtotal, @tax, @discount, @total, @payment)
+                                                VALUES (@tableId, @userId, @type::order_type_enum, @status::order_status_enum,
+                                                @subtotal, @tax, @discount, @total, @payment::payment_method_enum)
                                                 RETURNING order_id;";
 
                 using var createOrderCmd = new NpgsqlCommand(createOrderQuery, connection, tx);
@@ -89,8 +89,8 @@ namespace CoffeeShopPOS.Database
         {
             string query = @"INSERT INTO orders (table_id, user_id, order_type, status,
                             subtotal, tax, discount, total, payment_method)
-                            VALUES (@tableId, @userId, @type, @status,
-                            @subtotal, @tax, @discount, @total, @payment)
+                            VALUES (@tableId, @userId, @type::order_type_enum, @status::order_status_enum,
+                            @subtotal, @tax, @discount, @total, @payment::payment_method_enum)
                             RETURNING order_id;";
 
             var parameters = new Dictionary<string, object?>
@@ -163,8 +163,8 @@ namespace CoffeeShopPOS.Database
         {
             // If completing, also record the completion timestamp
             string query = status == "Completed"
-                ? "UPDATE orders SET status = @status, completed_at = NOW() WHERE order_id = @id"
-                : "UPDATE orders SET status = @status WHERE order_id = @id";
+                ? "UPDATE orders SET status = @status::order_status_enum, completed_at = NOW() WHERE order_id = @id"
+                : "UPDATE orders SET status = @status::order_status_enum WHERE order_id = @id";
 
             var parameters = new Dictionary<string, object?>
             {
@@ -181,7 +181,7 @@ namespace CoffeeShopPOS.Database
         /// </summary>
         public static bool UpdatePaymentMethod(int orderId, string paymentMethod)
         {
-            string query = "UPDATE orders SET payment_method = @method WHERE order_id = @id";
+            string query = "UPDATE orders SET payment_method = @method::payment_method_enum WHERE order_id = @id";
             var parameters = new Dictionary<string, object?>
             {
                 { "@id", orderId },
