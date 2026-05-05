@@ -62,6 +62,10 @@ namespace CoffeeShopPOS.Forms
             menuCard.Padding = new Padding(20, 18, 20, 18);
             BuildMenuPanel(menuCard);
             this.Controls.Add(menuCard);
+
+            // Enforce dock order: menu fill on left, spacer, cart fixed right.
+            this.Controls.SetChildIndex(menuCard, 0);
+            this.Controls.SetChildIndex(cartCard, 2);
         }
 
         // ─────────────────────────────────────────────────────────────

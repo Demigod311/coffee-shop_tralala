@@ -35,6 +35,8 @@ namespace CoffeeShopPOS.Forms
 
             BuildSidebar();
             BuildMainArea();
+            // Ensure docked controls are laid out in deterministic order.
+            sidebarPanel.BringToFront();
 
             clockTimer = new System.Windows.Forms.Timer { Interval = 1000 };
             clockTimer.Tick += (s, e) => UpdateClock();
@@ -371,6 +373,11 @@ namespace CoffeeShopPOS.Forms
                 Padding   = new Padding(24),
             };
             mainContainer.Controls.Add(contentPanel);
+
+            // Keep header at top and content below it (no overlap).
+            headerPanel.BringToFront();
+            mainContainer.Controls.SetChildIndex(contentPanel, 0);
+            mainContainer.Controls.SetChildIndex(headerPanel, 1);
         }
 
         // ═════════════════════════════════════════════════════════════

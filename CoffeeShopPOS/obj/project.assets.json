@@ -236,19 +236,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {}
+    "/Users/vyro/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\lalala\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
+      "projectUniqueName": "/Users/vyro/Desktop/shaheer/coffee-shop_tralala/CoffeeShopPOS/CoffeeShopPOS.csproj",
       "projectName": "CoffeeShopPOS",
-      "projectPath": "D:\\lalala\\coffee-shop_tralala\\CoffeeShopPOS\\CoffeeShopPOS.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "D:\\lalala\\coffee-shop_tralala\\CoffeeShopPOS\\obj\\",
+      "projectPath": "/Users/vyro/Desktop/shaheer/coffee-shop_tralala/CoffeeShopPOS/CoffeeShopPOS.csproj",
+      "packagesPath": "/Users/vyro/.nuget/packages/",
+      "outputPath": "/Users/vyro/Desktop/shaheer/coffee-shop_tralala/CoffeeShopPOS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/vyro/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
@@ -271,8 +271,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "10.0.200"
+      }
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -300,18 +299,6 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.26, 8.0.26]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.26, 8.0.26]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.26, 8.0.26]"
-          },
-          {
             "name": "Microsoft.WindowsDesktop.App.Ref",
             "version": "[8.0.26, 8.0.26]"
           }
@@ -324,7 +311,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/vyro/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
