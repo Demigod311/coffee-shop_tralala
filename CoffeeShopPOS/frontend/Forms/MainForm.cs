@@ -60,7 +60,7 @@ namespace CoffeeShopPOS.Forms
             var logoPanel = new Panel
             {
                 Dock      = DockStyle.Top,
-                Height    = 72,
+                Height    = 84,
                 BackColor = Color.Transparent,
             };
             logoPanel.Controls.Add(new Label
@@ -68,7 +68,7 @@ namespace CoffeeShopPOS.Forms
                 Text      = "☕",
                 Font      = new Font("Segoe UI", 22),
                 ForeColor = NavActiveClr,
-                Location  = new Point(18, 16),
+                Location  = new Point(18, 18),
                 AutoSize  = true,
                 BackColor = Color.Transparent,
             });
@@ -77,7 +77,7 @@ namespace CoffeeShopPOS.Forms
                 Text      = "Brew & Co.",
                 Font      = new Font("Segoe UI", 15, FontStyle.Bold),
                 ForeColor = NavActiveClr,
-                Location  = new Point(60, 22),
+                Location  = new Point(60, 28),
                 AutoSize  = true,
                 BackColor = Color.Transparent,
             });
@@ -99,7 +99,7 @@ namespace CoffeeShopPOS.Forms
             {
                 Dock      = DockStyle.Fill,
                 BackColor = Color.Transparent,
-                AutoScroll = false,
+                AutoScroll = true,
                 Padding   = new Padding(0, 8, 0, 8),
             };
             sidebarPanel.Controls.Add(navContainer);
@@ -139,13 +139,23 @@ namespace CoffeeShopPOS.Forms
                 y += 14;
                 AddNav("🗄", "Backup",   true, () => new BackupRestoreForm(), "Backup & Restore");
             }
+
+            navContainer.AutoScrollMinSize = new Size(0, y + 8);
+            sidebarPanel.Resize += (_, _) =>
+            {
+                foreach (var navItem in navContainer.Controls.OfType<Panel>())
+                {
+                    if (navItem.Dock == DockStyle.None)
+                        navItem.Width = sidebarPanel.Width;
+                }
+            };
         }
 
         private Panel MakeNavItem(string icon, string text)
         {
             var pnl = new Panel
             {
-                Size      = new Size(268, 44),
+                Size      = new Size(sidebarPanel.Width, 44),
                 BackColor = Color.Transparent,
                 Cursor    = Cursors.Hand,
             };

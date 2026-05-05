@@ -116,6 +116,11 @@ namespace CoffeeShopPOS.Forms
                     dgvReport.DataSource = data;
                     lblSummary.Text = $"📊 {cmbReportType.SelectedItem} — {data.Rows.Count} record(s) | {start:d} to {dtpEnd.Value:d}";
                 }
+                else
+                {
+                    dgvReport.DataSource = new DataTable();
+                    lblSummary.Text = $"📊 {cmbReportType.SelectedItem} — 0 record(s) | {start:d} to {dtpEnd.Value:d}";
+                }
             }
             catch (Exception ex) { ValidationHelper.ShowCriticalError($"Error generating report: {ex.Message}"); }
         }

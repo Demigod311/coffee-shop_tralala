@@ -91,6 +91,9 @@ namespace CoffeeShopPOS.Forms
             }
             catch (Exception ex)
             {
+                RebuildKpiCards(0, 0m, 0m, 0);
+                BuildTopSellingItems();
+                BuildRecentOrders();
                 MessageBox.Show($"Error loading dashboard:\n{ex.Message}",
                     "Dashboard Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -260,8 +263,34 @@ namespace CoffeeShopPOS.Forms
                         Convert.ToDecimal(row["total_revenue"] ?? 0));
                     topItemsCard.Controls.Add(dataRow);
                 }
+
+                if (items.Rows.Count == 0)
+                {
+                    topItemsCard.Controls.Add(new Label
+                    {
+                        Text      = "No sales data available for top items.",
+                        Font      = new Font("Segoe UI", 10),
+                        ForeColor = UIHelper.TextMuted,
+                        Dock      = DockStyle.Top,
+                        Height    = 44,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        BackColor = Color.Transparent,
+                    });
+                }
             }
-            catch { /* no data — show nothing */ }
+            catch
+            {
+                topItemsCard.Controls.Add(new Label
+                {
+                    Text      = "Unable to load top items.",
+                    Font      = new Font("Segoe UI", 10),
+                    ForeColor = UIHelper.TextMuted,
+                    Dock      = DockStyle.Top,
+                    Height    = 44,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BackColor = Color.Transparent,
+                });
+            }
 
             // Fix stacking order
             var controls = topItemsCard.Controls.Cast<Control>().ToList();
@@ -380,7 +409,19 @@ namespace CoffeeShopPOS.Forms
                     });
                 }
             }
-            catch { /* silently skip */ }
+            catch
+            {
+                recentCard.Controls.Add(new Label
+                {
+                    Text      = "Unable to load recent orders.",
+                    Font      = new Font("Segoe UI", 10),
+                    ForeColor = UIHelper.TextMuted,
+                    Dock      = DockStyle.Top,
+                    Height    = 44,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BackColor = Color.Transparent,
+                });
+            }
 
             // Fix stacking order
             var controls = recentCard.Controls.Cast<Control>().ToList();
